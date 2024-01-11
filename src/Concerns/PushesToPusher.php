@@ -15,12 +15,14 @@ trait PushesToPusher
      */
     public function getPusherBroadcaster(array $app)
     {
+        $client = new \GuzzleHttp\Client(config('broadcasting.connections.pusher.client_options', []));
         return new PusherBroadcaster(
             new Pusher(
                 $app['key'],
                 $app['secret'],
                 $app['id'],
-                config('broadcasting.connections.pusher.options', [])
+                config('broadcasting.connections.pusher.options', []),
+                $client
             )
         );
     }
